@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y \
 # 设置工作目录
 WORKDIR /fabric
 
-# 将当前目录的内容复制到 Docker 容器中
-COPY . /fabric
+# 克隆 Damon-HLH 的 fabric-samples 仓库的 main 分支
+RUN git clone --branch main https://github.com/Damon-HLH/fabric-samples.git .
 
-# 确保 install-fabric.sh 具有可执行权限
+# 确保 install-fabric.sh 存在并赋予执行权限
 RUN chmod +x ./install-fabric.sh
 
 # 运行 install-fabric.sh 脚本
