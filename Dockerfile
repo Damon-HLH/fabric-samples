@@ -15,9 +15,20 @@ WORKDIR /fabric
 # 克隆 Damon-HLH 的 fabric-samples 仓库的 main 分支
 RUN git clone --branch main https://github.com/Damon-HLH/fabric-samples.git .
 
+# 列出当前目录的文件，便于调试
+RUN ls -la
+
+# 确保 install-fabric.sh 存在并赋予执行权限
+RUN chmod +x ./install-fabric.sh
+
+# 再次列出文件以确认 chmod 操作
+RUN ls -la
+
 # 运行 install-fabric.sh 脚本
 RUN ./install-fabric.sh
 
+# 暴露 Hyperledger Fabric 的常用端口
+EXPOSE 7050 7051 7052 7053 8051 9051 10051
+
 # 使用 bash 作为默认启动命令
 CMD ["bash"]
-
