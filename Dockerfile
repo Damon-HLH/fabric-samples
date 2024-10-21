@@ -1,22 +1,26 @@
-# 使用带有必要工具的官方 Node.js 镜像作为基础镜像
+# 使用官方 Ubuntu 镜像作为基础镜像
 FROM ubuntu:20.04
 
-# 设置环境变量，避免交互式安装
+# 避免交互式安装影响构建
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 更新系统并安装必要的软件包
+# 更新系统并安装必要的软件包（包括 git、curl、unzip、docker）
 RUN apt-get update && apt-get install -y \
     curl git docker.io unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # 设置工作目录
-WORKDIR /root
+WORKDIR /fabric
 
-# 克隆 fabric-samples 仓库
-RUN git clone https://github.com/hyperledger/fabric-samples.git .
+# 从 Gitee 克隆 Hyperledger Fabric 仓库
+RUN git clone https://gitee.com/hyperledger/fabric.git .
 
-# 给脚本执行权限并运行 bootstrap.sh
-RUN chmod +x ./scripts/bootstrap.sh && ./scripts/bootstrap.sh
+# 复制 install-fabric.sh 到当前目录
+RUN cp ./scripts/install-fabric.sh .
 
-# 启动容器时进入 bash
+# 给 install-fabric.sh 赋予执行权限并运行
+RUN chmod +x ./install-fabric.sh && ./install-fabric.sh
+
+# 使用 bash 作为默认启动命令
 CMD ["bash"]
+
