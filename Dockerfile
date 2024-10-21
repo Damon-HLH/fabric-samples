@@ -10,17 +10,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 设置工作目录
-WORKDIR /fabric
-
-# 从 Gitee 克隆 Hyperledger Fabric 仓库
-RUN git clone https://gitee.com/hyperledger/fabric.git .
-
-# 复制 install-fabric.sh 到当前目录
-RUN cp ./scripts/install-fabric.sh .
+WORKDIR /fabric-samples
 
 # 给 install-fabric.sh 赋予执行权限并运行
 RUN chmod +x ./install-fabric.sh && ./install-fabric.sh
 
 # 使用 bash 作为默认启动命令
 CMD ["bash"]
-
