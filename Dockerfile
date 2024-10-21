@@ -19,10 +19,8 @@ RUN git clone --branch main https://github.com/Damon-HLH/fabric-samples.git .
 RUN ls -la
 
 # 确保 install-fabric.sh 存在并赋予执行权限
-RUN chmod +x ./install-fabric.sh
-
-# 再次列出文件以确认 chmod 操作
-RUN ls -la
+# 这里用 ls 确认文件的准确名称
+RUN ls -la && chmod +x ./install-fabric.sh
 
 # 运行 install-fabric.sh 脚本
 RUN ./install-fabric.sh
