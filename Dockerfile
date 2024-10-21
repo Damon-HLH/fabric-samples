@@ -12,18 +12,28 @@ RUN apt-get update && apt-get install -y \
 # 设置工作目录
 WORKDIR /fabric
 
+# 从 Gitee 克隆 Hyperledger Fabric 仓库
+RUN git clone https://gitee.com/hyperledger/fabric.git .
+
+# 复制 install-fabric.sh 到当前目录
+RUN cp ./scripts/install-fabric.sh .
+
+# 给 install-fabric.sh 赋予执行权限并运行
+RUN chmod +x ./install-fabric.sh && ./install-fabric.sh
+
+
 # 克隆 Damon-HLH 的 fabric-samples 仓库的 main 分支
-RUN git clone --branch main https://github.com/Damon-HLH/fabric-samples.git .
+#RUN git clone --branch main https://github.com/Damon-HLH/fabric-samples.git .
 
 # 列出当前目录的文件，便于调试
-RUN ls -la
+#RUN ls -la
 
 # 确保 install-fabric.sh 存在并赋予执行权限
 # 这里用 ls 确认文件的准确名称
-RUN ls -la && chmod +x ./install-fabric.sh
+#RUN ls -la && chmod +x ./install-fabric.sh
 
 # 运行 install-fabric.sh 脚本
-RUN ./install-fabric.sh
+#RUN ./install-fabric.sh
 
 # 暴露 Hyperledger Fabric 的常用端口
 EXPOSE 7050 7051 7052 7053 8051 9051 10051
