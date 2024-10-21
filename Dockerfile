@@ -15,9 +15,6 @@ WORKDIR /fabric
 # 克隆 Damon-HLH 的 fabric-samples 仓库的 main 分支
 RUN git clone --branch main https://github.com/Damon-HLH/fabric-samples.git .
 
-# 确保 install-fabric.sh 存在并赋予执行权限
-RUN chmod +x ./install-fabric.sh
-
 # 运行 install-fabric.sh 脚本
 RUN ./install-fabric.sh
 
