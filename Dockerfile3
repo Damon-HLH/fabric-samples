@@ -16,21 +16,21 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
-# 从 Gitee 克隆 Hyperledger Fabric 仓库
-RUN git clone https://github.com/Damon-HLH/fabric-samples.git /usr/fabric
-
 # 设置工作目录
 WORKDIR /usr/fabric
 
-# 拷贝 install-fabric.sh 脚本到容器中
-COPY ./install-fabric.sh ./
+# 从本地复制 install-fabric.sh 脚本
+COPY ./install-fabric.sh /usr/fabric/
 
-# 执行 install-fabric.sh 脚本
-RUN chmod +x install-fabric.sh && ./install-fabric.sh
+# 打印文件内容确认复制成功
+RUN ls -l /usr/fabric && cat /usr/fabric/install-fabric.sh
 
-# 暴露所需的端口（根据你的网络设置）
+# 给脚本添加执行权限并运行
+RUN chmod +x /usr/fabric/install-fabric.sh && ./install-fabric.sh
+
+# 暴露所需端口
 EXPOSE 7050 7051 7052 7053 7054
 
 # 启动 Hyperledger Fabric
 ENTRYPOINT ["peer"]
+CMD ["--help"]  # 避免容器立即退出
