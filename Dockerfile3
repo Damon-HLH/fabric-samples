@@ -16,8 +16,15 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+
+# 从 Gitee 克隆 Hyperledger Fabric 仓库
+RUN git clone https://github.com/Damon-HLH/fabric-samples.git /usr/fabric
+
 # 设置工作目录
 WORKDIR /usr/fabric
+
+# 列出当前目录中的所有文件
+RUN echo "当前目录文件列表：" && ls -l
 
 # 从本地复制 install-fabric.sh 脚本
 COPY ./install-fabric.sh /usr/fabric/
