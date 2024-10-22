@@ -1,0 +1,35 @@
+# 使用 Ubuntu 作为基础镜像
+FROM ubuntu:20.04
+
+# 设置环境变量
+ENV FABRIC_CFG_PATH=/etc/hyperledger/fabric
+ENV PATH="$PATH:/usr/local/bin"
+
+# 更新系统并安装必要的依赖
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    make \
+    gcc \
+    g++ \
+    unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 克隆 Hyperledger Fabric 源代码
+RUN git clone https://gitee.com/hyperledger/fabric.git /opt/fabric
+
+# 设置工作目录
+WORKDIR /opt/fabric
+
+# 拷贝 install-fabric.sh 脚本到容器中
+COPY ./install-fabric.sh ./
+
+# 执行 install-fabric.sh 脚本
+RUN chmod +x install-fabric.sh && ./install-fabric.sh
+
+# 暴露所需的端口（根据你的网络设置）
+EXPOSE 7050 7051 7052 7053 7054
+
+# 启动 Hyperledger Fabric
+ENTRYPOINT ["peer"]
