@@ -33,7 +33,7 @@ COPY ./install-fabric.sh /usr/fabric/
 RUN ls -l /usr/fabric && cat /usr/fabric/install-fabric.sh
 
 # 给脚本添加执行权限并运行
-RUN chmod +x /usr/fabric/install-fabric.sh && ./install-fabric.sh
+RUN chmod +x /usr/fabric/install-fabric.sh && /usr/fabric/install-fabric.sh
 
 # 暴露所需端口
 EXPOSE 7050 7051 7052 7053 7054
