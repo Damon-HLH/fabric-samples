@@ -33,7 +33,8 @@ COPY ./install-fabric.sh /usr/fabric/
 RUN ls -l /usr/fabric 
 
 RUN chmod +x /usr/fabric/install-fabric.sh
-RUN ../usr/fabric/install-fabric.sh
+# RUN ../usr/fabric/install-fabric.sh
+RUN bash -x /usr/fabric/install-fabric.sh
 
 
 # 暴露所需端口
