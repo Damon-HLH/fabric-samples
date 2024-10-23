@@ -30,10 +30,11 @@ RUN echo "当前目录文件列表：" && ls -l
 COPY ./install-fabric.sh /usr/fabric/
 
 # 打印文件内容确认复制成功
-RUN ls -l /usr/fabric && cat /usr/fabric/install-fabric.sh
+RUN ls -l /usr/fabric 
 
-# 给脚本添加执行权限并运行
-RUN chmod +x /usr/fabric/install-fabric.sh && /usr/fabric/install-fabric.sh
+RUN chmod +x /usr/fabric/install-fabric.sh
+RUN /usr/fabric/install-fabric.sh
+
 
 # 暴露所需端口
 EXPOSE 7050 7051 7052 7053 7054
