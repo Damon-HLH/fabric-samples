@@ -42,10 +42,18 @@ RUN chmod +x /usr/fabric/install-fabric.sh
 # 运行脚本
 RUN bash -x /usr/fabric/install-fabric.sh
 
+# 启动 Hyperledger Fabric
+# ENTRYPOINT ["peer"]
+# CMD ["--help"]  # 避免容器立即退出
+
+# 设置工作目录为 fabric-samples/test-network
+WORKDIR /usr/fabric/test-network
+
+# 运行 ./network.sh up
+ENTRYPOINT ["bash", "./network.sh"]
+CMD ["up"]
 
 # 暴露所需端口
 EXPOSE 7050 7051 7052 7053 7054
 
 # 启动 Hyperledger Fabric
-ENTRYPOINT ["peer"]
-CMD ["--help"]  # 避免容器立即退出
