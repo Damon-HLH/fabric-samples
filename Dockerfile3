@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     unzip \
+    dos2unix \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -32,8 +33,13 @@ COPY ./install-fabric.sh /usr/fabric/
 # 打印文件内容确认复制成功
 RUN ls -l /usr/fabric 
 
+# 转换脚本格式
+RUN dos2unix /usr/fabric/install-fabric.sh
+
+# 确保脚本可执行
 RUN chmod +x /usr/fabric/install-fabric.sh
-# RUN ../usr/fabric/install-fabric.sh
+
+# 运行脚本
 RUN bash -x /usr/fabric/install-fabric.sh
 
 
